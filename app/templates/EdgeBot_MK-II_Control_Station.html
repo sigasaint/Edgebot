@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EdgeBot Mk-II Controller</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .instructions {
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      color: #ccc;
+      font-size: 1em;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .btn-control {
+      padding: 15px;
+      font-size: 1.5em;
+      background-color: #00d1ff;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-control:active {
+      background-color: #008bb5;
+    }
+    .dark .btn-control {
+      background-color: #1f6feb !important;
+      color: #fff !important;
+    }
+    .dark .instructions {
+      background-color: #23272b;
+      color: #e6edf3;
+    }
+    .dark input[type="text"] {
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 250px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background-color: #222;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Bootstrap Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.index') }}">
+        <img src="{{ url_for('static', filename='logo/logo2.png') }}" alt="EdgeBot Logo" height="40" class="me-2">
+        EdgeBot MK-II
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.download_edgebot') }}">Download</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.wiring_tutorial') }}">Wiring Tutorial</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.pro_tips_page') }}">Pro Tips</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.main_py_documentation') }}">Docs</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.donate') }}">Donate</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{{ url_for('main.control_station') }}">Control Station</a></li>
+        </ul>
+        <button class="btn btn-outline-light ms-3" type="button" onclick="toggleDarkMode()">🌗 Dark Mode</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container my-5">
+    <div class="card shadow p-4 bg-dark text-white">
+      <h1 class="mb-4">EdgeBot Mk-II Wi-Fi Controller</h1>
+      <div class="instructions mb-4">
+    🔧 <strong>Setup Instructions:</strong><br>
+    1. Power on your EdgeBot Mk-II and connect to its Wi-Fi hotspot, SSID: EdgeBot-MKII, Password: edgebot123.<br>
+    2. Once connected, return to this page and enter the IP address: <strong><code>192.168.4.1</code></strong><br>
+    3. Press any direction button to start controlling the robot in real time.
+  </div>
+  <p>Enter Robot IP Address</p>
+      <input type="text" id="robotIp" placeholder="192.168.4.1" class="mb-3" />
+      <div id="ws-status" class="mb-3 text-info">WebSocket: Not connected</div>
+  <div class="btn-grid">
+        <button class="btn-control" onclick="sendCommand('forward')"><i class="fas fa-arrow-up"></i></button>
+        <button class="btn-control" onclick="sendCommand('stop')"><i class="fas fa-stop-circle"></i></button>
+        <button class="btn-control" onclick="sendCommand('backward')"><i class="fas fa-arrow-down"></i></button>
+        <button class="btn-control" onclick="sendCommand('left')"><i class="fas fa-arrow-left"></i></button>
+        <button class="btn-control" onclick="sendCommand('right')"><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+  <footer class="mt-5 text-center text-secondary">
+    &copy; 2025 EdgeBot MK-II — Sentinel-X Systems. All rights reserved. 🇿🇼
+  </footer>
+  <script>
+    let ws = null;
+    let wsConnected = false;
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function connectWebSocket() {
+      const ip = document.getElementById("robotIp").value.trim();
+      if (!ip) {
+        alert("Enter the robot's IP address first!");
+        return;
+      }
+      const wsUrl = `ws://${ip}:8266/`;
+      ws = new WebSocket(wsUrl);
+      document.getElementById("ws-status").textContent = "WebSocket: Connecting...";
+      ws.onopen = function() {
+        wsConnected = true;
+        document.getElementById("ws-status").textContent = "WebSocket: Connected";
+        document.getElementById("ws-status").className = "mb-3 text-success";
+      };
+      ws.onclose = function() {
+        wsConnected = false;
+        document.getElementById("ws-status").textContent = "WebSocket: Disconnected";
+        document.getElementById("ws-status").className = "mb-3 text-danger";
+      };
+      ws.onerror = function() {
+        wsConnected = false;
+        document.getElementById("ws-status").textContent = "WebSocket: Error";
+        document.getElementById("ws-status").className = "mb-3 text-danger";
+      };
+      ws.onmessage = function(event) {
+        // Optionally display feedback from robot
+        console.log("Robot:", event.data);
+      };
+    }
+
+    document.getElementById("robotIp").addEventListener("change", function() {
+      if (ws && ws.readyState === WebSocket.OPEN) ws.close();
+      connectWebSocket();
+    });
+
+    function sendCommand(action) {
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        connectWebSocket();
+        setTimeout(() => {
+          if (ws && ws.readyState === WebSocket.OPEN) ws.send(action);
+        }, 500);
+      } else {
+        ws.send(action);
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

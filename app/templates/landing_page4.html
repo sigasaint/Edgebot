@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EdgeBot MK-II | Sentinel-X Systems</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eaf4ff;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    header {
+      background-color: #002b5c;
+      color: white;
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    header .branding {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header img {
+      height: 50px;
+      border-radius: 6px;
+    }
+
+    header h1 {
+      font-size: 1.6em;
+      margin: 0;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background: #cfe7ff;
+      border-bottom: 2px solid #003366;
+      flex-wrap: wrap;
+    }
+
+    .tabs button {
+      padding: 10px 20px;
+      border: none;
+      background: #cfe7ff;
+      color: #003366;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 1em;
+    }
+
+    .tabs button:hover,
+    .tabs button.active {
+      background-color: #003366;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+      max-width: 100%;
+      margin: auto;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    iframe {
+      width: 100%;
+      height: 88vh;
+      border: none;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      color: #444;
+      font-size: 0.85em;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="branding">
+    <img src="logo/logo2.png" alt="EdgeBot Logo" />
+    <h1>EdgeBot MK-II | Sentinel-X Systems</h1>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tablink active" onclick="openTab('about')">🏛️ About</button>
+  <button class="tablink" onclick="openTab('console')">🕹️ Console</button>
+  <button class="tablink" onclick="openTab('docs')">📘 Documentation</button>
+  <button class="tablink" onclick="openTab('wiring')">🧰 Wiring Tutorial</button>
+  <button class="tablink" onclick="openTab('download')">📦 Downloads</button>
+  <button class="tablink" onclick="openTab('tips')">💡 Pro Tips</button>
+  <button class="tablink" onclick="openTab('control')">🎮 Control Station</button>
+  <button class="tablink" onclick="openTab('donate')">💖 Donate</button>
+</nav>
+
+<div id="about" class="tab-content active">
+  <iframe src="about_sentinelx.html"></iframe>
+</div>
+
+<div id="console" class="tab-content">
+  <iframe src="index.html"></iframe>
+</div>
+
+<div id="docs" class="tab-content">
+  <iframe src="main_py_documentation.html"></iframe>
+</div>
+
+<div id="wiring" class="tab-content">
+  <iframe src="wiring_tutorial.html"></iframe>
+</div>
+
+<div id="download" class="tab-content">
+  <iframe src="download_edgebot.html"></iframe>
+</div>
+
+<div id="tips" class="tab-content">
+  <iframe src="pro_tips_page.html"></iframe>
+</div>
+
+<div id="control" class="tab-content">
+  <iframe src="EdgeBot_MK-II_Control_Station.html"></iframe>
+</div>
+
+<div id="donate" class="tab-content">
+  <iframe src="donate.html"></iframe>
+</div>
+
+<footer>
+  &copy; 2025 Sentinel-X Systems | Designed by Mthokozisi Thabiso Sapuwa 🧠 | Made in 🇿🇼 Zimbabwe for the 🌍 World
+</footer>
+
+<script>
+  function openTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tablink');
+
+    tabs.forEach(tab => tab.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(tabName).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
