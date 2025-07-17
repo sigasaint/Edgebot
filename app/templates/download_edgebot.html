@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Download EdgeBot MK-II - Open Source Robotics{% endblock %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,29 +75,6 @@
   </style>
 </head>
 <body>
-  <!-- Bootstrap Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--header-bg);">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.index') }}">
-        <img src="{{ url_for('static', filename='logo/logo2.png') }}" alt="EdgeBot Logo" height="40" class="me-2">
-        EdgeBot MK-II
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="{{ url_for('main.download_edgebot') }}">Download</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.wiring_tutorial') }}">Wiring Tutorial</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.pro_tips_page') }}">Pro Tips</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.main_py_documentation') }}">Docs</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.donate') }}">Donate</a></li>
-        </ul>
-        <button class="btn btn-outline-light ms-3" type="button" onclick="toggleDarkMode()">�� Dark Mode</button>
-      </div>
-    </div>
-  </nav>
   <div class="container my-5">
     <div class="card shadow p-4">
       <p><i class="fa-solid fa-star"></i> Welcome to the official <strong>EdgeBot MK-II</strong> download hub!  
@@ -160,3 +140,4 @@
   </a>
 </body>
 </html>
+{% endblock %}
