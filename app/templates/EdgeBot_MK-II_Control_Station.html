@@ -9,101 +9,202 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
   <style>
+    :root {
+      --bg: #121212;
+      --card-bg: #1e1e1e;
+      --text: #e6edf3;
+      --btn-main: #00d1ff;
+      --btn-main-dark: #1f6feb;
+      --btn-main-text: #222;
+      --btn-main-text-dark: #fff;
+      --accent: #ffd700;
+    }
     body {
-      background-color: #121212;
-      color: white;
-      text-align: center;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    .control-card {
+      background: var(--card-bg);
+      color: var(--text);
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+      max-width: 420px;
+      margin: 60px auto 0 auto;
+      padding: 2.5rem 2rem 2rem 2rem;
+      position: relative;
     }
     .instructions {
-      background-color: #1e1e1e;
-      padding: 20px;
+      background: rgba(255,255,255,0.04);
+      padding: 18px;
       border-radius: 10px;
-      margin-bottom: 30px;
-      line-height: 1.6;
-      color: #ccc;
+      margin-bottom: 28px;
+      color: #bfc9d1;
       font-size: 1em;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      line-height: 1.6;
     }
-    .btn-grid {
+    .dpad {
       display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 15px;
+      grid-template-columns: 70px 70px 70px;
+      grid-template-rows: 70px 70px 70px;
+      gap: 12px;
       justify-content: center;
-      margin-top: 30px;
+      align-items: center;
+      margin: 0 auto 18px auto;
+      width: max-content;
     }
-    .btn-control {
-      padding: 15px;
-      font-size: 1.5em;
-      background-color: #00d1ff;
-      color: black;
+    .dpad-btn {
+      background: var(--btn-main);
+      color: var(--btn-main-text);
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
+      font-size: 2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 70px;
+      width: 70px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, color 0.2s;
       cursor: pointer;
-      transition: background 0.2s;
+      outline: none;
     }
-    .btn-control:active {
-      background-color: #008bb5;
-    }
-    .dark .btn-control {
-      background-color: #1f6feb !important;
-      color: #fff !important;
-    }
-    .dark .instructions {
-      background-color: #23272b;
-      color: #e6edf3;
-    }
-    .dark input[type="text"] {
-      background-color: #222;
+    .dpad-btn:active {
+      background: #008bb5;
       color: #fff;
-      border: 1px solid #555;
     }
-    input[type="text"] {
-      padding: 10px;
-      width: 250px;
-      font-size: 16px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      border: 1px solid #555;
-      background-color: #222;
+    .dpad-btn.stop {
+      background: var(--accent);
+      color: #222;
+      font-size: 2.2em;
+      font-weight: bold;
+    }
+    .status-indicator {
+      font-size: 1em;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .ip-input-group {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .ip-input {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #23272b;
       color: #fff;
+      font-size: 1.1em;
+      width: 180px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .ip-input:focus {
+      border: 1.5px solid var(--btn-main);
+    }
+    .connect-btn {
+      background: var(--btn-main);
+      color: var(--btn-main-text);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1.1em;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+    .connect-btn:active {
+      background: #008bb5;
+      color: #fff;
+    }
+    .back-btn {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 1100;
+      background: var(--btn-main);
+      color: var(--btn-main-text);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: background 0.2s, color 0.2s;
+    }
+    .back-btn:active {
+      background: #008bb5;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .control-card {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+      }
+      .dpad {
+        grid-template-columns: 54px 54px 54px;
+        grid-template-rows: 54px 54px 54px;
+        gap: 8px;
+      }
+      .dpad-btn {
+        width: 54px;
+        height: 54px;
+        font-size: 1.3em;
+      }
+      .dpad-btn.stop {
+        font-size: 1.5em;
+      }
+      .back-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+        top: 10px;
+        left: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Remove navbar, header, and footer. Do not extend base.html. Keep only the control UI and dark mode logic. -->
-  <div class="container my-5">
-    <div class="card shadow p-4 bg-dark text-white">
-      <h1 class="mb-4">EdgeBot Mk-II Wi-Fi Controller</h1>
-      <div class="instructions mb-4">
-    🔧 <strong>Setup Instructions:</strong><br>
-    1. Power on your EdgeBot Mk-II and connect to its Wi-Fi hotspot, SSID: EdgeBot-MKII, Password: edgebot123.<br>
-    2. Once connected, return to this page and enter the IP address: <strong><code>192.168.4.1</code></strong><br>
-    3. Press any direction button to start controlling the robot in real time.
-  </div>
-  <p>Enter Robot IP Address</p>
-      <input type="text" id="robotIp" placeholder="192.168.4.1" class="mb-3" />
-      <div id="ws-status" class="mb-3 text-info">WebSocket: Not connected</div>
-  <div class="btn-grid">
-        <button class="btn-control" onclick="sendCommand('forward')"><i class="fas fa-arrow-up"></i></button>
-        <button class="btn-control" onclick="sendCommand('stop')"><i class="fas fa-stop-circle"></i></button>
-        <button class="btn-control" onclick="sendCommand('backward')"><i class="fas fa-arrow-down"></i></button>
-        <button class="btn-control" onclick="sendCommand('left')"><i class="fas fa-arrow-left"></i></button>
-        <button class="btn-control" onclick="sendCommand('right')"><i class="fas fa-arrow-right"></i></button>
-      </div>
+  <a href="/" class="back-btn" title="Back to Home"><i class="fa fa-arrow-left"></i></a>
+  <div class="control-card">
+    <h1 class="mb-4">EdgeBot Mk-II Wi-Fi Controller</h1>
+    <div class="instructions mb-4">
+      <i class="fa-solid fa-screwdriver-wrench"></i> <strong>Setup Instructions:</strong><br>
+      1. Power on your EdgeBot Mk-II and connect to its Wi-Fi hotspot, SSID: <b>EdgeBot-MKII</b>, Password: <b>edgebot123</b>.<br>
+      2. Once connected, return to this page and enter the IP address: <strong><code>192.168.4.1</code></strong><br>
+      3. Press any direction button to start controlling the robot in real time.
+    </div>
+    <div class="ip-input-group">
+      <input type="text" id="robotIp" class="ip-input" placeholder="192.168.4.1" />
+      <button class="connect-btn" onclick="connectWebSocket()"><i class="fa fa-link"></i> Connect</button>
+    </div>
+    <div id="ws-status" class="status-indicator text-info">WebSocket: Not connected</div>
+    <div class="dpad">
+      <div></div>
+      <button class="dpad-btn" onclick="sendCommand('forward')" title="Forward"><i class="fas fa-arrow-up"></i></button>
+      <div></div>
+      <button class="dpad-btn" onclick="sendCommand('left')" title="Left"><i class="fas fa-arrow-left"></i></button>
+      <button class="dpad-btn stop" onclick="sendCommand('stop')" title="Stop"><i class="fas fa-stop-circle"></i></button>
+      <button class="dpad-btn" onclick="sendCommand('right')" title="Right"><i class="fas fa-arrow-right"></i></button>
+      <div></div>
+      <button class="dpad-btn" onclick="sendCommand('backward')" title="Backward"><i class="fas fa-arrow-down"></i></button>
+      <div></div>
     </div>
   </div>
   <script>
     let ws = null;
     let wsConnected = false;
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-    }
 
     function connectWebSocket() {
       const ip = document.getElementById("robotIp").value.trim();
@@ -117,28 +218,23 @@
       ws.onopen = function() {
         wsConnected = true;
         document.getElementById("ws-status").textContent = "WebSocket: Connected";
-        document.getElementById("ws-status").className = "mb-3 text-success";
+        document.getElementById("ws-status").className = "status-indicator text-success";
       };
       ws.onclose = function() {
         wsConnected = false;
         document.getElementById("ws-status").textContent = "WebSocket: Disconnected";
-        document.getElementById("ws-status").className = "mb-3 text-danger";
+        document.getElementById("ws-status").className = "status-indicator text-danger";
       };
       ws.onerror = function() {
         wsConnected = false;
         document.getElementById("ws-status").textContent = "WebSocket: Error";
-        document.getElementById("ws-status").className = "mb-3 text-danger";
+        document.getElementById("ws-status").className = "status-indicator text-danger";
       };
       ws.onmessage = function(event) {
         // Optionally display feedback from robot
         console.log("Robot:", event.data);
       };
     }
-
-    document.getElementById("robotIp").addEventListener("change", function() {
-      if (ws && ws.readyState === WebSocket.OPEN) ws.close();
-      connectWebSocket();
-    });
 
     function sendCommand(action) {
       if (!ws || ws.readyState !== WebSocket.OPEN) {
@@ -149,6 +245,13 @@
       } else {
         ws.send(action);
       }
+    }
+
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}");
+      });
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

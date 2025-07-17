@@ -1,115 +1,100 @@
 {% extends 'base.html' %}
 {% block title %}EdgeBot MK-II | Enhanced Wiring & Build Guide{% endblock %}
+{% block head %}
+<style>
+  :root {
+    --bg: #eef7ff;
+    --text: #222;
+    --header: #003366;
+    --code-bg: #f0f0f0;
+    --highlight: #d0eaff;
+    --link: #0066cc;
+    --quote-bg: #d7edff;
+    --quote-border: #007acc;
+  }
+  body.dark {
+    --bg: #0d1117;
+    --text: #e6edf3;
+    --header: #161b22;
+    --code-bg: #1c2128;
+    --highlight: #243447;
+    --link: #58a6ff;
+    --quote-bg: #1e2a38;
+    --quote-border: #58a6ff;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .dark .container, .dark .card {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+  }
+  .dark .btn {
+    background-color: var(--link) !important;
+    color: #fff !important;
+  }
+  .btn {
+    margin: 10px 10px 0 0;
+  }
+  code, pre {
+    background: var(--code-bg);
+    padding: 12px;
+    display: block;
+    white-space: pre-wrap;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.95em;
+  }
+  .highlight {
+    background: var(--highlight);
+    padding: 5px 8px;
+    border-radius: 5px;
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  blockquote {
+    background: var(--quote-bg);
+    border-left: 4px solid var(--quote-border);
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  .diagram {
+    display: block;
+    width: 100%;
+    max-width: 850px;
+    margin: 20px auto 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .caption {
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--text);
+    opacity: 0.75;
+    margin-bottom: 30px;
+  }
+</style>
+{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EdgeBot MK-II | Enhanced Wiring & Build Guide</title>
-  <!-- Bootstrap 5 CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root {
-      --bg: #eef7ff;
-      --text: #222;
-      --header: #003366;
-      --code-bg: #f0f0f0;
-      --highlight: #d0eaff;
-      --link: #0066cc;
-      --quote-bg: #d7edff;
-      --quote-border: #007acc;
-    }
-    body.dark {
-      --bg: #0d1117;
-      --text: #e6edf3;
-      --header: #161b22;
-      --code-bg: #1c2128;
-      --highlight: #243447;
-      --link: #58a6ff;
-      --quote-bg: #1e2a38;
-      --quote-border: #58a6ff;
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    .dark .navbar, .dark .navbar-brand, .dark .nav-link, .dark .navbar-toggler {
-      background-color: var(--header) !important;
-      color: #fff !important;
-    }
-    .dark .container, .dark .card {
-      background: var(--bg) !important;
-      color: var(--text) !important;
-    }
-    .dark .btn {
-      background-color: var(--link) !important;
-      color: #fff !important;
-    }
-    .btn {
-      margin: 10px 10px 0 0;
-    }
-    code, pre {
-      background: var(--code-bg);
-      padding: 12px;
-      display: block;
-      white-space: pre-wrap;
-      border-radius: 6px;
-      overflow-x: auto;
-      font-size: 0.95em;
-    }
-    .highlight {
-      background: var(--highlight);
-      padding: 5px 8px;
-      border-radius: 5px;
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    blockquote {
-      background: var(--quote-bg);
-      border-left: 4px solid var(--quote-border);
-      padding: 10px 15px;
-      margin: 10px 0;
-      border-radius: 5px;
-    }
-    .diagram {
-      display: block;
-      width: 100%;
-      max-width: 850px;
-      margin: 20px auto 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-    .caption {
-      text-align: center;
-      font-size: 0.9em;
-      color: var(--text);
-      opacity: 0.75;
-      margin-bottom: 30px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container my-5">
-    <div class="card shadow p-4">
-  <div class="section">
-        <h2><i class="fa-solid fa-book"></i> Introduction</h2>
-    <p>This wiring guide covers how to assemble and power the EdgeBot MK-II using an ESP32, L298N motor driver, 18650 power pack, and various supported chassis. Built for reliability and simplicity in the Zimbabwean robotics ecosystem.</p>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-plug"></i> ESP32 to L298N Connections</h2>
-    <p>Below is the GPIO mapping for your motors:</p>
-    <pre><code># Motor A (Left)
+<div class="container my-5">
+  <div class="card shadow p-4">
+    <div class="section">
+      <h2><i class="fa-solid fa-book"></i> Introduction</h2>
+      <p>This wiring guide covers how to assemble and power the EdgeBot MK-II using an ESP32, L298N motor driver, 18650 power pack, and various supported chassis. Built for reliability and simplicity in the Zimbabwean robotics ecosystem.</p>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-plug"></i> ESP32 to L298N Connections</h2>
+      <p>Below is the GPIO mapping for your motors:</p>
+      <pre><code># Motor A (Left)
 IN1 = GPIO18
 IN2 = GPIO19
 ENA = GPIO25 (PWM)
@@ -118,70 +103,62 @@ ENA = GPIO25 (PWM)
 IN3 = GPIO26
 IN4 = GPIO27
 ENB = GPIO14 (PWM)</code></pre>
-    <p class="highlight">Direction is controlled by IN1/IN2 and IN3/IN4. Speed is set via PWM on ENA and ENB.</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/connecting_esp32_to_L298n.jpg') }}" class="diagram" alt="ESP32 to L298N wiring">
-    <p class="caption">Figure 1: ESP32 connected to L298N motor driver</p>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-cogs"></i> Motor & Battery Power Wiring</h2>
-    <p>Here we connect motors and the 3S battery pack to the L298N.</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/connecting_motors&power_supply_unit.jpg') }}" class="diagram" alt="L298N Motor and Power Supply">
-    <p class="caption">Figure 2: Connecting motor output and power input on L298N</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/psu.jpg') }}" class="diagram" alt="18650 PSU Battery Pack">
-    <p class="caption">Figure 3: 3S (11.1V) battery pack made from 18650 cells</p>
-        <blockquote><i class="fa-solid fa-battery-full"></i> <strong>Power Tip:</strong> Ensure your battery has overcurrent protection or fuse. Never exceed 12.6V input.</blockquote>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-map-marker-alt"></i> Full ESP32 Pinout Reference</h2>
-    <p>This wiring diagram shows exactly where the ESP32 connects to the L298N motor driver, including GPIO labels and physical layout.</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/esp32_diagram.jpg') }}" class="diagram" alt="ESP32 GPIO and Motor Wiring Diagram">
-    <p class="caption">Figure X: ESP32 pinout and GPIO mapping for motor driver integration</p>
-        <blockquote><i class="fa-solid fa-brain"></i><strong> Pin Mapping Key</strong> GPIO18 -> IN1, GPIO19 -> IN2, GPIO25 -> ENA, GPIO26 -> IN3, GPIO27 -> IN4, GPIO14 -> ENB</blockquote>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-wrench"></i> Typical Motors Used</h2>
-    <p>These are the DC motors most commonly used in EdgeBot MK-II builds:</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/motors.jpg') }}" class="diagram" alt="DC Motor Types">
-    <p class="caption">Figure 4: Standard yellow gear motors (6V–12V range)</p>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-car"></i> Supported Chassis Examples</h2>
-    <p>Here are two common chassis formats compatible with EdgeBot MK-II:</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/chasis_example1.jpg') }}" class="diagram" alt="Chassis Example 1">
-    <p class="caption">Figure 5: Lightweight plastic chassis with 2WD/4WD slots</p>
-        <img src="{{ url_for('static', filename='wiring_diagrams/chasis_example2.jpg') }}" class="diagram" alt="Chassis Example 2">
-    <p class="caption">Figure 6: Modular aluminum chassis for rugged builds</p>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-check"></i> Wiring Checklist</h2>
-        <ul>
-          <li><i class="fa-solid fa-brain"></i> Confirm motor direction with short tests</li>
-          <li><i class="fa-solid fa-battery-full"></i> Never power ESP32 directly from motor battery — use voltage regulator</li>
-          <li><i class="fa-solid fa-flask"></i> Test GPIOs using LED or serial debug before connecting motors</li>
-          <li><i class="fa-solid fa-ban"></i> Add <code>stop()</code> call on boot inside <code>main.py</code> to avoid auto-movement</li>
-    </ul>
-  </div>
-  <div class="section">
-        <h2><i class="fa-solid fa-envelope"></i> Contact & Credits</h2>
-    <p>Designed by <strong>Mthokozisi Thabiso Sapuwa</strong><br>
-       Sentinel-X Systems R&D Lab, Zimbabwe 🇿🇼</p>
-    <p>
-      📧 Email: <a href="mailto:sentinelxzw@gmail.com">sentinelxzw@gmail.com</a><br>
-      💬 WhatsApp: <a href="https://wa.me/263777932721" target="_blank">+263 777 932 721</a>
-    </p>
-  </div>
+      <p class="highlight">Direction is controlled by IN1/IN2 and IN3/IN4. Speed is set via PWM on ENA and ENB.</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/connecting_esp32_to_L298n.jpg') }}" class="diagram" alt="ESP32 to L298N wiring">
+      <p class="caption">Figure 1: ESP32 connected to L298N motor driver</p>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-cogs"></i> Motor & Battery Power Wiring</h2>
+      <p>Here we connect motors and the 3S battery pack to the L298N.</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/connecting_motors&power_supply_unit.jpg') }}" class="diagram" alt="L298N Motor and Power Supply">
+      <p class="caption">Figure 2: Connecting motor output and power input on L298N</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/psu.jpg') }}" class="diagram" alt="18650 PSU Battery Pack">
+      <p class="caption">Figure 3: 3S (11.1V) battery pack made from 18650 cells</p>
+      <blockquote><i class="fa-solid fa-battery-full"></i> <strong>Power Tip:</strong> Ensure your battery has overcurrent protection or fuse. Never exceed 12.6V input.</blockquote>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-map-marker-alt"></i> Full ESP32 Pinout Reference</h2>
+      <p>This wiring diagram shows exactly where the ESP32 connects to the L298N motor driver, including GPIO labels and physical layout.</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/esp32_diagram.jpg') }}" class="diagram" alt="ESP32 GPIO and Motor Wiring Diagram">
+      <p class="caption">Figure X: ESP32 pinout and GPIO mapping for motor driver integration</p>
+      <blockquote><i class="fa-solid fa-brain"></i><strong> Pin Mapping Key</strong> GPIO18 -> IN1, GPIO19 -> IN2, GPIO25 -> ENA, GPIO26 -> IN3, GPIO27 -> IN4, GPIO14 -> ENB</blockquote>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-wrench"></i> Typical Motors Used</h2>
+      <p>These are the DC motors most commonly used in EdgeBot MK-II builds:</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/motors.jpg') }}" class="diagram" alt="DC Motor Types">
+      <p class="caption">Figure 4: Standard yellow gear motors (6V–12V range)</p>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-car"></i> Supported Chassis Examples</h2>
+      <p>Here are two common chassis formats compatible with EdgeBot MK-II:</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/chasis_example1.jpg') }}" class="diagram" alt="Chassis Example 1">
+      <p class="caption">Figure 5: Lightweight plastic chassis with 2WD/4WD slots</p>
+      <img src="{{ url_for('static', filename='wiring_diagrams/chasis_example2.jpg') }}" class="diagram" alt="Chassis Example 2">
+      <p class="caption">Figure 6: Modular aluminum chassis for rugged builds</p>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-check"></i> Wiring Checklist</h2>
+      <ul>
+        <li><i class="fa-solid fa-brain"></i> Confirm motor direction with short tests</li>
+        <li><i class="fa-solid fa-battery-full"></i> Never power ESP32 directly from motor battery — use voltage regulator</li>
+        <li><i class="fa-solid fa-flask"></i> Test GPIOs using LED or serial debug before connecting motors</li>
+        <li><i class="fa-solid fa-ban"></i> Add <code>stop()</code> call on boot inside <code>main.py</code> to avoid auto-movement</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h2><i class="fa-solid fa-envelope"></i> Contact & Credits</h2>
+      <p>Designed by <strong>Mthokozisi Thabiso Sapuwa</strong><br>
+         Sentinel-X Systems R&D Lab, Zimbabwe 🇿🇼</p>
+      <p>
+        <i class="fa-solid fa-envelope"></i> Email: <a href="mailto:sentinelxzw@gmail.com">sentinelxzw@gmail.com</a><br>
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/263777932721" target="_blank">+263 777 932 721</a>
+      </p>
     </div>
   </div>
-  <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-    }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Add floating control station button -->
-  <a href="{{ url_for('main.control_station') }}" class="btn btn-primary position-fixed" style="bottom: 30px; right: 30px; z-index: 1050; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.2); font-size: 2em;">
-    <i class="fas fa-gamepad"></i>
-  </a>
-</body>
-</html>
+</div>
+<!-- Add floating control station button -->
+<a href="{{ url_for('main.control_station') }}" class="btn btn-primary position-fixed" style="bottom: 30px; right: 30px; z-index: 1050; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.2); font-size: 2em;">
+  <i class="fas fa-gamepad"></i>
+</a>
 {% endblock %}

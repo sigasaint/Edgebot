@@ -2,15 +2,26 @@
 {% block title %}EdgeBot MK-II | Sentinel-X Systems{% endblock %}
 {% block head %}
 <style>
-  .dark .card {
-    background: var(--bg) !important;
-    color: var(--text) !important;
-    border-color: #222 !important;
+  :root {
+    --bg: #eef7ff;
+    --text: #222;
+    --container-bg: #fff;
+  }
+  body.dark {
+    --bg: #0d1117;
+    --text: #e6edf3;
+    --container-bg: #1f2937;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
   }
   .card {
-    background: var(--container-bg, #fff);
-    color: var(--text, #222);
+    background: var(--container-bg);
+    color: var(--text);
     transition: background 0.3s, color 0.3s;
+    border-color: #222;
   }
 </style>
 {% endblock %}

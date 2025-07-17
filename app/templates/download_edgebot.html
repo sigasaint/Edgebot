@@ -1,143 +1,111 @@
 {% extends 'base.html' %}
 {% block title %}Download EdgeBot MK-II - Open Source Robotics{% endblock %}
-{% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Download EdgeBot MK-II - Open Source Robotics</title>
-  <!-- Bootstrap 5 CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root {
-      --bg: #eef7ff;
-      --text: #222;
-      --header-bg: #003366;
-      --container-bg: white;
-      --button-bg: #007BFF;
-      --button-hover: #0056b3;
-      --section-title: #003366;
-      --footer-text: #666;
-      --code-bg: #f2f2f2;
-    }
-    body.dark {
-      --bg: #0d1117;
-      --text: #e6edf3;
-      --header-bg: #161b22;
-      --container-bg: #1f2937;
-      --button-bg: #2563eb;
-      --button-hover: #1e40af;
-      --section-title: #60a5fa;
-      --footer-text: #999;
-      --code-bg: #2c3543;
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    .dark .navbar, .dark .navbar-brand, .dark .nav-link, .dark .navbar-toggler {
-      background-color: var(--header-bg) !important;
-      color: #fff !important;
-    }
-    .dark .container, .dark .card {
-      background: var(--container-bg) !important;
-      color: var(--text) !important;
-    }
-    .dark .btn {
-      background-color: var(--button-bg) !important;
-      color: #fff !important;
-    }
-    .btn {
-      margin: 10px 10px 0 0;
-    }
-    code {
-      background: var(--code-bg);
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-family: monospace;
-    }
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      color: var(--footer-text);
-      font-size: 0.9em;
-    }
-    .section-title {
-      font-size: 1.4em;
-      margin-top: 40px;
-      color: var(--section-title);
-    }
-  </style>
-</head>
-<body>
-  <div class="container my-5">
-    <div class="card shadow p-4">
-      <p><i class="fa-solid fa-star"></i> Welcome to the official <strong>EdgeBot MK-II</strong> download hub!  
-     Whether you're a student, developer, hacker, or visionary — you're about to access the power of clean robotics with no dependencies and pure control.</p>
-      <p><i class="fa-solid fa-globe"></i> The <code>main.py</code> and <code>EdgeBot_MK-II_Control_Station.html</code> inside <strong>edgebot_mk-II</strong> folder are the brains of the bot.  
-  With just these two files, EdgeBot:</p>
-  <ul>
-        <li><i class="fa-solid fa-wifi"></i> Creates its own Wi-Fi network (AP Mode)</li>
-        <li><i class="fa-solid fa-laptop"></i> Hosts a web-based control panel (usable on phone or laptop)</li>
-        <li><i class="fa-solid fa-plug"></i> Controls motors in real time via MicroPython</li>
-  </ul>
-      <a class="btn btn-primary btn-lg mb-3" href="{{ url_for('static', filename='edgebot_mk-II.zip') }}" download><i class="fa-solid fa-download"></i> Download EdgeBot MK-II (main.py + EdgeBot_MK-II_Control_Station.html)</a>
-      <h2 class="section-title"><i class="fa-solid fa-laptop"></i> Thonny IDE (Portable Version)</h2>
-      <p>
-         <i class="fa-solid fa-tools"></i> We included a portable copy of <strong>Thonny 4.1.7</strong> — the easiest IDE to get started with MicroPython.
-    No installation needed, just unzip and launch <code>thonny.exe</code>!
-  </p>
-  <ul>
-        <li><i class="fa-solid fa-rocket"></i> Supports ESP32 out of the box</li>
-        <li><i class="fa-solid fa-brain"></i> Great for first-time developers and classroom teaching</li>
-        <li><i class="fa-solid fa-save"></i> Works from a flash drive or any folder!</li>
-  </ul>
-      <a class="btn btn-success btn-lg mb-3" href="{{ url_for('static', filename='thonny-4.1.7-windows-portable.zip') }}" download><i class="fa-solid fa-lightbulb"></i> Download Thonny IDE Portable</a>
-      <h2 class="section-title"><i class="fa-solid fa-cogs"></i> ESP32 MicroPython Firmware</h2>
-  <p>
-         <i class="fa-solid fa-dna"></i> This is the official <code>ESP32_GENERIC-20250415-v1.25.0.bin</code> firmware used to flash your ESP32 board.  
-    Flash this using tools like <a href="https://micropython.org/download/esp32/" target="_blank">esptool.py</a> or <a href="https://micropython.org/download/esp32/" target="_blank">Thonny's built-in flasher</a>.
-  </p>
-  <ul>
-        <li><i class="fa-solid fa-soap"></i> Clean base firmware — no bloat, just raw power</li>
-        <li><i class="fa-solid fa-traffic-light"></i> Compatible with all Sentinel-X scripts</li>
-        <li><i class="fa-solid fa-lock"></i> Best performance with EdgeBot MK-II systems</li>
-  </ul>
-      <a class="btn btn-secondary btn-lg mb-3" href="{{ url_for('static', filename='ESP32_GENERIC-20250415-v1.25.0.bin') }}" download><i class="fa-solid fa-download"></i> Download ESP32 Firmware</a>
-      <h2 class="section-title"><i class="fa-solid fa-bullhorn"></i> Final Notes</h2>
-  <p>
-         <i class="fa-solid fa-flask"></i> <strong>Everything here is fully open source</strong> — use it in classrooms, workshops, private R&D, and mission-critical deployments.  
-    EdgeBot is built to run where other robots fail — even offline in harsh conditions.
-  </p>
-  <p>
-         <i class="fa-solid fa-brain"></i> Developers are encouraged to fork, extend, and contribute.  
-    Future versions will include modular PCB upgrades, onboard AI, and long-range comms.
-  </p>
-      <p>
-         <i class="fa-solid fa-envelope"></i> For questions, support, or collaboration:<br>
-         <i class="fa-solid fa-envelope"></i> Email: <a href="mailto:sentinelxzw@gmail.com">sentinelxzw@gmail.com</a><br>
-         <i class="fa-solid fa-mobile-alt"></i> WhatsApp: <a href="https://wa.me/263777932721" target="_blank">+263 777 932 721</a>
-      </p>
-    </div>
-</div>
-  <footer class="mt-5">
-    <p>© 2025 Sentinel-X Systems | Built for Zimbabwe <i class="fa-solid fa-flag"></i> and the world <i class="fa-solid fa-globe"></i> | Powered by You <i class="fa-solid fa-lightbulb"></i></p>
-</footer>
-<script>
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark');
+{% block head %}
+<style>
+  :root {
+    --bg: #eef7ff;
+    --text: #222;
+    --header-bg: #003366;
+    --container-bg: white;
+    --button-bg: #007BFF;
+    --button-hover: #0056b3;
+    --section-title: #003366;
+    --footer-text: #666;
+    --code-bg: #f2f2f2;
   }
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Add floating control station button -->
-  <a href="{{ url_for('main.control_station') }}" class="btn btn-primary position-fixed" style="bottom: 30px; right: 30px; z-index: 1050; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.2); font-size: 2em;">
-    <i class="fas fa-gamepad"></i>
-  </a>
-</body>
-</html>
+  body.dark {
+    --bg: #0d1117;
+    --text: #e6edf3;
+    --header-bg: #161b22;
+    --container-bg: #1f2937;
+    --button-bg: #2563eb;
+    --button-hover: #1e40af;
+    --section-title: #60a5fa;
+    --footer-text: #999;
+    --code-bg: #2c3543;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .dark .container, .dark .card {
+    background: var(--container-bg) !important;
+    color: var(--text) !important;
+  }
+  .dark .btn {
+    background-color: var(--button-bg) !important;
+    color: #fff !important;
+  }
+  .btn {
+    margin: 10px 10px 0 0;
+  }
+  code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-family: monospace;
+  }
+  .section-title {
+    font-size: 1.4em;
+    margin-top: 40px;
+    color: var(--section-title);
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow p-4">
+    <p><i class="fa-solid fa-star"></i> Welcome to the official <strong>EdgeBot MK-II</strong> download hub!  
+   Whether you're a student, developer, hacker, or visionary — you're about to access the power of clean robotics with no dependencies and pure control.</p>
+    <p><i class="fa-solid fa-globe"></i> The <code>main.py</code> and <code>EdgeBot_MK-II_Control_Station.html</code> inside <strong>edgebot_mk-II</strong> folder are the brains of the bot.  
+With just these two files, EdgeBot:</p>
+<ul>
+      <li><i class="fa-solid fa-wifi"></i> Creates its own Wi-Fi network (AP Mode)</li>
+      <li><i class="fa-solid fa-laptop"></i> Hosts a web-based control panel (usable on phone or laptop)</li>
+      <li><i class="fa-solid fa-plug"></i> Controls motors in real time via MicroPython</li>
+</ul>
+    <a class="btn btn-primary btn-lg mb-3" href="{{ url_for('static', filename='edgebot_mk-II.zip') }}" download><i class="fa-solid fa-download"></i> Download EdgeBot MK-II (main.py + EdgeBot_MK-II_Control_Station.html)</a>
+    <h2 class="section-title"><i class="fa-solid fa-laptop"></i> Thonny IDE (Portable Version)</h2>
+    <p>
+       <i class="fa-solid fa-tools"></i> We included a portable copy of <strong>Thonny 4.1.7</strong> — the easiest IDE to get started with MicroPython.
+No installation needed, just unzip and launch <code>thonny.exe</code>!
+</p>
+<ul>
+      <li><i class="fa-solid fa-rocket"></i> Supports ESP32 out of the box</li>
+      <li><i class="fa-solid fa-brain"></i> Great for first-time developers and classroom teaching</li>
+      <li><i class="fa-solid fa-save"></i> Works from a flash drive or any folder!</li>
+</ul>
+    <a class="btn btn-success btn-lg mb-3" href="{{ url_for('static', filename='thonny-4.1.7-windows-portable.zip') }}" download><i class="fa-solid fa-lightbulb"></i> Download Thonny IDE Portable</a>
+    <h2 class="section-title"><i class="fa-solid fa-cogs"></i> ESP32 MicroPython Firmware</h2>
+<p>
+       <i class="fa-solid fa-dna"></i> This is the official <code>ESP32_GENERIC-20250415-v1.25.0.bin</code> firmware used to flash your ESP32 board.  
+Flash this using tools like <a href="https://micropython.org/download/esp32/" target="_blank">esptool.py</a> or <a href="https://micropython.org/download/esp32/" target="_blank">Thonny's built-in flasher</a>.
+</p>
+<ul>
+      <li><i class="fa-solid fa-soap"></i> Clean base firmware — no bloat, just raw power</li>
+      <li><i class="fa-solid fa-traffic-light"></i> Compatible with all Sentinel-X scripts</li>
+      <li><i class="fa-solid fa-lock"></i> Best performance with EdgeBot MK-II systems</li>
+</ul>
+    <a class="btn btn-secondary btn-lg mb-3" href="{{ url_for('static', filename='ESP32_GENERIC-20250415-v1.25.0.bin') }}" download><i class="fa-solid fa-download"></i> Download ESP32 Firmware</a>
+    <h2 class="section-title"><i class="fa-solid fa-bullhorn"></i> Final Notes</h2>
+<p>
+       <i class="fa-solid fa-flask"></i> <strong>Everything here is fully open source</strong> — use it in classrooms, workshops, private R&D, and mission-critical deployments.  
+EdgeBot is built to run where other robots fail — even offline in harsh conditions.
+</p>
+<p>
+       <i class="fa-solid fa-brain"></i> Developers are encouraged to fork, extend, and contribute.  
+Future versions will include modular PCB upgrades, onboard AI, and long-range comms.
+</p>
+    <p>
+       <i class="fa-solid fa-envelope"></i> For questions, support, or collaboration:<br>
+       <i class="fa-solid fa-envelope"></i> Email: <a href="mailto:sentinelxzw@gmail.com">sentinelxzw@gmail.com</a><br>
+       <i class="fa-solid fa-mobile-alt"></i> WhatsApp: <a href="https://wa.me/263777932721" target="_blank">+263 777 932 721</a>
+    </p>
+  </div>
+</div>
+<!-- Add floating control station button -->
+<a href="{{ url_for('main.control_station') }}" class="btn btn-primary position-fixed" style="bottom: 30px; right: 30px; z-index: 1050; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.2); font-size: 2em;">
+  <i class="fas fa-gamepad"></i>
+</a>
 {% endblock %}
